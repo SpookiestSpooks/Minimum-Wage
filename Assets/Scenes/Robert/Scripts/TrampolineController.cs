@@ -10,13 +10,6 @@ public class TrampolineController : MonoBehaviour
     float xMovement;
     [SerializeField] float speed = 5f;
 
-
-    // Explosion/Bounch Related
-    float force = 10f;
-    float radius = 10f;
-
-
-
     void Start()
     {
         pController = GetComponent<CharacterController>();
@@ -32,15 +25,4 @@ public class TrampolineController : MonoBehaviour
 
     }
 
-    void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("Hello");
-
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
-
-            rb.AddExplosionForce(force, transform.position, radius);
-        }
-    }
 }
