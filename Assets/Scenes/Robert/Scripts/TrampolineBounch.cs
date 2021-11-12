@@ -12,15 +12,13 @@ public class TrampolineBounch : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+       
+
         if (other.gameObject.CompareTag("Player"))
         {
-            Rigidbody rb = other.GetComponent<Rigidbody>();
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
-            if(rb != null)
-            {
-                rb.AddExplosionForce(force, transform.position, radius);
-            }
-            
+             rb.AddExplosionForce(force, transform.position, radius); 
         }
 
     }
