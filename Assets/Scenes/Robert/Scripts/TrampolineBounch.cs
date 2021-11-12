@@ -14,7 +14,7 @@ public class TrampolineBounch : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+            Rigidbody rb = other.GetComponent<Rigidbody>();
 
             if(rb != null)
             {
