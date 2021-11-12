@@ -5,24 +5,25 @@ using UnityEngine;
 public class TrampolineController : MonoBehaviour
 {
     // Trampoline Control
-    CharacterController pController;
+    Rigidbody rb;
+
 
     float xMovement;
     [SerializeField] float speed = 5f;
 
     void Start()
     {
-        pController = GetComponent<CharacterController>();
+
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-
         xMovement = Input.GetAxis("Horizontal");
 
+        Vector3 movement = new Vector3(xMovement, 0f, 0f);
 
-        pController.Move(new Vector3(xMovement, 0f, 0f) * speed * Time.deltaTime);
-
+        rb.velocity = (movement) * speed * Time.fixedDeltaTime;
     }
 
 }
