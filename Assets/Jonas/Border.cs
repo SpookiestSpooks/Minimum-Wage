@@ -5,16 +5,10 @@ using UnityEngine;
 public class Border : MonoBehaviour
 {
     public GameObject scream;
-    AudioSource gameAudio;
-
-    private void Start()
-    {
-        gameAudio = scream.GetComponent<AudioSource>();
-    }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "GameController")
+        if (other.tag == "Player")
         {
             Instantiate(scream);
         }
