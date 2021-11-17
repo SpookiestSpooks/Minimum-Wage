@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrampolineController : MonoBehaviour
+public class Player1 : MonoBehaviour
 {
-    // Trampoline Control
-    Rigidbody rb;
+
+    CharacterController charController1;
 
     bool xMovementRightBool;
     bool xMovementLeftBool;
@@ -14,23 +14,16 @@ public class TrampolineController : MonoBehaviour
     float xMovementLeft;
     float xMovement;
 
-    [SerializeField] float speed = 5f;
-
-    bool jump;
-    [SerializeField] float jumpForce = 50f;
-
-    Vector3 movement;
+    [SerializeField] float moveSpeed = 5f;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        charController1 = GetComponent<CharacterController>();
     }
+
 
     void Update()
     {
-
-
-        #region // Horizontal Movement
         xMovementRightBool = Input.GetKey(KeyCode.D);
         xMovementLeftBool = Input.GetKey(KeyCode.A);
 
@@ -54,13 +47,6 @@ public class TrampolineController : MonoBehaviour
 
         xMovement = xMovementRight + xMovementLeft;
 
-        #endregion
-
-
-        movement = new Vector3(xMovement, 0f, 0f);
-
-        rb.velocity = (movement) * speed * Time.fixedDeltaTime;
-
-
+        charController1.Move(new Vector3(xMovement * moveSpeed, 0f, 0f) * Time.deltaTime);
     }
 }

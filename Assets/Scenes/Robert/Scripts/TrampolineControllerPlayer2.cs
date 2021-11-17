@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrampolineController : MonoBehaviour
+public class TrampolineControllerPlayer2 : MonoBehaviour
 {
     // Trampoline Control
     Rigidbody rb;
@@ -16,11 +16,6 @@ public class TrampolineController : MonoBehaviour
 
     [SerializeField] float speed = 5f;
 
-    bool jump;
-    [SerializeField] float jumpForce = 50f;
-
-    Vector3 movement;
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -28,11 +23,8 @@ public class TrampolineController : MonoBehaviour
 
     void Update()
     {
-
-
-        #region // Horizontal Movement
-        xMovementRightBool = Input.GetKey(KeyCode.D);
-        xMovementLeftBool = Input.GetKey(KeyCode.A);
+        xMovementRightBool = Input.GetKey(KeyCode.RightArrow);
+        xMovementLeftBool = Input.GetKey(KeyCode.LeftArrow);
 
         if (xMovementRightBool)
         {
@@ -52,15 +44,14 @@ public class TrampolineController : MonoBehaviour
             xMovementLeft = 0f;
         }
 
+
+
+
         xMovement = xMovementRight + xMovementLeft;
 
-        #endregion
-
-
-        movement = new Vector3(xMovement, 0f, 0f);
+        Vector3 movement = new Vector3(xMovement, 0f, 0f);
 
         rb.velocity = (movement) * speed * Time.fixedDeltaTime;
-
-
     }
+
 }
