@@ -45,8 +45,6 @@ public class TrampolineControllerPlayer2 : MonoBehaviour
         }
 
 
-
-
         xMovement = xMovementRight + xMovementLeft;
 
         Vector3 movement = new Vector3(xMovement, 0f, 0f);

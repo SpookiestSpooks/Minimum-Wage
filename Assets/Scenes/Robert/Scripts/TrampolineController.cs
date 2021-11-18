@@ -16,9 +16,6 @@ public class TrampolineController : MonoBehaviour
 
     [SerializeField] float speed = 5f;
 
-    bool jump;
-    [SerializeField] float jumpForce = 50f;
-
     Vector3 movement;
 
     void Start()
