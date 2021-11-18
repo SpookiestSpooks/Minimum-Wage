@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     GameObject wiper;
+    public GameObject player;
     Transform respawnLocation;
 
     public bool respawn = false;
@@ -20,24 +21,17 @@ public class PlayerScript : MonoBehaviour
     {
         if (respawn)
         {
-            StartCoroutine(waitHere());
+            //StartCoroutine(waitHere());
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.tag == "Bounds")
-        {
-            respawn = true;
-        }
-    }
-
-    IEnumerator waitHere()
+    /*IEnumerator waitHere()
     {
         yield return new WaitForSeconds(respawnTimer);
-        gameObject.transform.position = respawnLocation.position;
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        respawn = false;
-    }
+        GameObject spawnedPlayer = Instantiate(player, Vector3.zero, respawnLocation.rotation);
+        spawnedPlayer.transform.position = respawnLocation.position;
+        print(true);
+        Destroy(gameObject);
+    }*/
 
 }
