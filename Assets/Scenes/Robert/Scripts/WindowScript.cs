@@ -56,7 +56,7 @@ public class WindowScript : MonoBehaviour
             {
                 spawning = false;
                 GameObject newClener = Instantiate(newCleanerPrefab, spawnPoint.position, spawnPoint.rotation);
-                Invoke("ResetSpawningBool", 1f);
+                Invoke("ResetSpawningBool", 2f);
             }
 
         }
