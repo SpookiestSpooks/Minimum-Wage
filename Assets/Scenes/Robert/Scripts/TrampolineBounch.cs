@@ -18,19 +18,10 @@ public class TrampolineBounch : MonoBehaviour
     [SerializeField] Animator trampolineAnimator;
 
 
-
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         myParent = GetComponentInParent<Transform>();
-    }
-
-    void Update()
-    {
-        if(trampolineAnimator.GetBool("Actor_Present") == false)
-        {
-            //myParent.position = new Vector3(myParent.position.x, 0f, myParent.position.z);
-        }
     }
 
     void OnTriggerEnter(Collider other)
