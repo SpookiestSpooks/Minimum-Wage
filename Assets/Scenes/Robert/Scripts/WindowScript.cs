@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class WindowScript : MonoBehaviour
 {
+    GameProgress progress;
 
     [SerializeField] GameObject newCleanerPrefab;
-    [SerializeField] Transform spawnPoint;
+    public Transform spawnPoint;
     BoxCollider myCollider;
     bool windowIsOpen = false;
-    bool spawning = true;
+    bool dead = false;
 
     Animator anim;
     [SerializeField] float windowAnimationTime;
@@ -20,6 +21,8 @@ public class WindowScript : MonoBehaviour
         myCollider = GetComponent<BoxCollider>();
         anim = GetComponent<Animator>();
         anim.SetBool("Closed", true);
+
+        progress = GameObject.Find("GameProgress").GetComponent<GameProgress>();
     }
 
     void Update()
@@ -33,41 +36,35 @@ public class WindowScript : MonoBehaviour
             myCollider.enabled = false;
         }
 
-        if (!windowIsOpen)
-        {
-            Invoke("OpenWindow", windowStateChange);
-        }
-
         if (windowIsOpen)
         {
-            Invoke("CloseWindow", windowStateChange);
+            if (!dead)
+            {
+                Invoke("CloseWindow", windowStateChange);
+            }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.name == "Torso")
         {
-            GameObject parent = other.transform.parent.gameObject;
+            other.gameObject.transform.parent.GetComponent<PlayerScript>().respawn = true;
 
-            Destroy(parent);
-
-            if (spawning)
+            if (other != null)
             {
-                spawning = false;
-                GameObject newClener = Instantiate(newCleanerPrefab, spawnPoint.position, spawnPoint.rotation);
-                Invoke("ResetSpawningBool", 2f);
+                progress.respawn(other.gameObject.transform.parent.gameObject, other.gameObject.transform.parent.tag);
+                CloseWindow();
+                dead = true;
             }
 
         }
     }
 
 
-
-
-    void ResetSpawningBool()
+    public void openWindow()
     {
-        spawning = true;
+        Invoke("OpenWindow", windowStateChange);
     }
 
     void Closed()
@@ -103,6 +100,7 @@ public class WindowScript : MonoBehaviour
         anim.SetBool("Open", false);
         anim.SetBool("Closing", true);
         Invoke("Closed", windowAnimationTime);
+        dead = false;
     }
 
 

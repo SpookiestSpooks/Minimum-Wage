@@ -623,7 +623,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7ca82471f77ab64fbf81da7806a0bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scream: {fileID: 6130956380003029402, guid: dbda766fb871ecd41bf383fcebfbff26, type: 3}
   progress: {fileID: 405126762}
 --- !u!82 &132020508
 AudioSource:
@@ -1555,7 +1554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 519797637751902487, guid: 118faf920f4011c45b37f2b26285be8d, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: -0.001199913
+      value: -0.0011999607
       objectReference: {fileID: 0}
     - target: {fileID: 577197468777479395, guid: 118faf920f4011c45b37f2b26285be8d, type: 3}
       propertyPath: m_RootOrder
@@ -1571,7 +1570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 577197468777479395, guid: 118faf920f4011c45b37f2b26285be8d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.01
+      value: -3.42
       objectReference: {fileID: 0}
     - target: {fileID: 577197468777479395, guid: 118faf920f4011c45b37f2b26285be8d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1782,6 +1781,7 @@ MonoBehaviour:
   respawnLocation: {fileID: 650339403}
   Player: {fileID: 236806933255562841, guid: 118faf920f4011c45b37f2b26285be8d, type: 3}
   isAlive: 1
+  scream: {fileID: 6130956380003029402, guid: dbda766fb871ecd41bf383fcebfbff26, type: 3}
 --- !u!1001 &415502319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1831,7 +1831,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7692165928553051866, guid: fc4164564cd736e44960494e422edd66, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.03
+      value: -3.66
       objectReference: {fileID: 0}
     - target: {fileID: 7692165928553051866, guid: fc4164564cd736e44960494e422edd66, type: 3}
       propertyPath: m_LocalRotation.w

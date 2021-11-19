@@ -5,28 +5,45 @@ using UnityEngine;
 public class GameProgress : MonoBehaviour
 {
     public GameObject[] remainingDirt;
-    public Transform respawnLocation;
-    public GameObject Player;
-    public bool isAlive = true;
+    public Transform[] respawnLocation;
+    public GameObject Player1, Player2, Player3, Player4; //prefabs
+    
 
     private void Update()
     {
         remainingDirt = GameObject.FindGameObjectsWithTag("Wiper");
+
+        if (Input.GetButton("Cancel"))
+        {
+            Application.Quit();
+        }
     }
 
-    public void respawn(GameObject player)
-    {
+    public void respawn(GameObject player, string playerTag)
+    {    
         Destroy(player);
-        StartCoroutine(waitRespawn());
+        StartCoroutine(waitRespawn(playerTag));
     }
 
-    IEnumerator waitRespawn()
+    IEnumerator waitRespawn(string playerTag)
     {
         yield return new WaitForSeconds(2);
-
-        GameObject spawnedPlayer = Instantiate(Player, Vector3.zero, respawnLocation.rotation);
-        spawnedPlayer.transform.position = respawnLocation.position;
-        isAlive = true;
-        print(true);
+        int random = Random.Range(0,3);
+        if (playerTag == "Player")
+        {
+            GameObject spawnedPlayer = Instantiate(Player1, respawnLocation[random].position, respawnLocation[random].rotation);
+        }
+        if (playerTag == "Player2")
+        {
+            GameObject spawnedPlayer = Instantiate(Player2, respawnLocation[random].position, respawnLocation[random].rotation);
+        }
+        if (playerTag == "Player3")
+        {
+            GameObject spawnedPlayer = Instantiate(Player3, respawnLocation[random].position, respawnLocation[random].rotation);
+        }
+        if (playerTag == "Player4")
+        {
+            GameObject spawnedPlayer = Instantiate(Player4, respawnLocation[random].position, respawnLocation[random].rotation);
+        }
     }
 }

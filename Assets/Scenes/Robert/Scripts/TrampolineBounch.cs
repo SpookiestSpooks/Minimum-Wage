@@ -6,6 +6,7 @@ using UnityEngine.Animations;
 public class TrampolineBounch : MonoBehaviour
 {
     Transform myParent;
+    public string playerTag = "Player";
 
     // Explosion/Bounch Related
     [SerializeField] float force = 10f;
@@ -26,7 +27,7 @@ public class TrampolineBounch : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag(playerTag))
         {
             audioSource.Play();
             trampolineAnimator.SetBool("Actor_Present", true);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrampolineControllerPlayer2 : MonoBehaviour
+public class TrampolineControllerP3 : MonoBehaviour
 {
     // Trampoline Control
     Rigidbody rb;
@@ -23,8 +23,8 @@ public class TrampolineControllerPlayer2 : MonoBehaviour
 
     void Update()
     {
-        xMovementRightBool = Input.GetKey(KeyCode.L);
-        xMovementLeftBool = Input.GetKey(KeyCode.J);
+        xMovementRightBool = Input.GetKey(KeyCode.RightArrow);
+        xMovementLeftBool = Input.GetKey(KeyCode.LeftArrow);
 
         if (xMovementRightBool)
         {

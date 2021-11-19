@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class Border : MonoBehaviour
 {
-    public GameObject scream;
-
     public GameProgress progress;
+    public GameObject scream;
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject.name == "Head")
         {
-            Instantiate(scream);
             other.gameObject.transform.parent.GetComponent<PlayerScript>().respawn = true;
             
-            if (progress.isAlive)
+            if (other != null)
             {
-                progress.isAlive = false;
-                progress.respawn(other.gameObject);
+                progress.respawn(other.gameObject.transform.parent.gameObject, other.gameObject.transform.parent.tag);
+                Instantiate(scream);
+
             }
             
         }

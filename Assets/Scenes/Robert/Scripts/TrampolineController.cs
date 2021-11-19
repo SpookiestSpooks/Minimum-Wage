@@ -56,7 +56,7 @@ public class TrampolineController : MonoBehaviour
 
         movement = new Vector3(xMovement, 0f, 0f);
 
-        rb.velocity = (movement) * speed * Time.fixedDeltaTime;
+        rb.velocity = (movement * -1) * speed * Time.fixedDeltaTime;
 
 
     }

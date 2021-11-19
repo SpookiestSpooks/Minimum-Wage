@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     GameObject wiper;
+    GameProgress progress;
+
     public GameObject player;
-    Transform respawnLocation;
+    public bool isAlive;
 
     public bool respawn = false;
     public float respawnTimer = 2;
@@ -14,24 +16,14 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         wiper = gameObject.transform.GetChild(1).gameObject;
-        respawnLocation = GameObject.Find("RespawnLocation").transform;
+        progress = GameObject.Find("GameProgress").GetComponent<GameProgress>();
     }
 
-    void FixedUpdate()
+    /*private void OnTriggerEnter(Collider other)
     {
-        if (respawn)
+        if (other.tag == "Bounds")
         {
-            //StartCoroutine(waitHere());
+            progress.respawn(gameObject, gameObject.tag);
         }
-    }
-
-    /*IEnumerator waitHere()
-    {
-        yield return new WaitForSeconds(respawnTimer);
-        GameObject spawnedPlayer = Instantiate(player, Vector3.zero, respawnLocation.rotation);
-        spawnedPlayer.transform.position = respawnLocation.position;
-        print(true);
-        Destroy(gameObject);
     }*/
-
 }
