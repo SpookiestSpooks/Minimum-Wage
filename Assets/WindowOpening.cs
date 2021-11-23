@@ -16,8 +16,6 @@ public class WindowOpening : MonoBehaviour
 
     void Start()
     {
-        availableWindows = gameObject.GetComponent<WindowManager>().windowCount;
-        windows = GameObject.FindGameObjectsWithTag("Window");
         spawnPoints = gameObject.GetComponent<GameProgress>().respawnLocation;
     }
 
@@ -33,6 +31,12 @@ public class WindowOpening : MonoBehaviour
             Invoke("resetTimer", 15);
         }
         
+    }
+
+    public void setupWindows()
+    {
+        availableWindows = gameObject.GetComponent<WindowManager>().windowCount;
+        windows = GameObject.FindGameObjectsWithTag("Window");
     }
 
     void opening()

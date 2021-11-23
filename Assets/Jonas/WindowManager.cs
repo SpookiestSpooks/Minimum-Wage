@@ -13,15 +13,19 @@ public class WindowManager : MonoBehaviour
     List<int> dirtiedList = new List<int>();
 
     // Start is called before the first frame update
-    void Start()
+    public void Setup()
     {
-        windows = GameObject.FindGameObjectsWithTag("Window");
-        windowCount = windows.Length;
-
+        getWindows();
         generateDirt();
     }
 
-    void generateDirt()
+    public void getWindows()
+    {
+        windows = GameObject.FindGameObjectsWithTag("Window");
+        windowCount = windows.Length;
+    }
+
+    public void generateDirt()
     {
         for (int i = 0; i < dirtyWindows; i++)
         {
