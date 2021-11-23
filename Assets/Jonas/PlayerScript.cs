@@ -18,12 +18,4 @@ public class PlayerScript : MonoBehaviour
         wiper = gameObject.transform.GetChild(1).gameObject;
         progress = GameObject.Find("GameProgress").GetComponent<GameProgress>();
     }
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Bounds")
-        {
-            progress.respawn(gameObject, gameObject.tag);
-        }
-    }*/
 }
