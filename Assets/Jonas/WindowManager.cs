@@ -5,7 +5,7 @@ using UnityEngine;
 public class WindowManager : MonoBehaviour
 {
 
-    GameObject[] windows;
+    public List<GameObject> windows = new List<GameObject>();
     public int windowCount;
     public int dirtyWindows = 10;
 
@@ -21,12 +21,16 @@ public class WindowManager : MonoBehaviour
 
     public void getWindows()
     {
-        windows = GameObject.FindGameObjectsWithTag("Window");
-        windowCount = windows.Length;
+        foreach (GameObject window in GameObject.FindGameObjectsWithTag("Window"))
+        {
+            windows.Add(window);
+        }
+        windowCount = windows.Count;
     }
 
     public void generateDirt()
     {
+        dirtiedList.Clear();
         for (int i = 0; i < dirtyWindows; i++)
         {
             int random = Random.Range(0, windowCount - 1);

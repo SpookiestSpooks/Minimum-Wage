@@ -5,14 +5,14 @@ using UnityEngine;
 public class WindowOpening : MonoBehaviour
 {
     int availableWindows;
-    GameObject[] windows;
+    public List<GameObject> windows = new List<GameObject>();
     Transform[] spawnPoints;
 
     public int timer = 5;
     public int amountOfWindows = 1;
     bool windowStart = false;
 
-    bool windowOpen;
+    public bool enableOpening = false;
 
     void Start()
     {
@@ -21,29 +21,34 @@ public class WindowOpening : MonoBehaviour
 
     private void Update()
     {
-        if (!windowStart)
+        if (enableOpening)
         {
-            for (int i = 0; i < amountOfWindows; i++)
+            if (!windowStart)
             {
-                opening();
+                for (int i = 0; i < amountOfWindows; i++)
+                {
+                    opening();
+                }
+                windowStart = true;
+                Invoke("resetTimer", 15);
             }
-            windowStart = true;
-            Invoke("resetTimer", 15);
         }
-        
+        else
+        {
+            resetTimer();
+        }
     }
 
     public void setupWindows()
     {
         availableWindows = gameObject.GetComponent<WindowManager>().windowCount;
-        windows = GameObject.FindGameObjectsWithTag("Window");
+        windows = gameObject.GetComponent<WindowManager>().windows;
     }
 
     void opening()
     {
-        
         int spawnRandom = Random.Range(0,3);
-        int windowRandom = Random.Range(0, windows.Length - 1);
+        int windowRandom = Random.Range(0, windows.Count - 1);
         windows[windowRandom].GetComponentInChildren<WindowScript>().spawnPoint = spawnPoints[spawnRandom];
         windows[windowRandom].GetComponentInChildren<WindowScript>().openWindow();
     }

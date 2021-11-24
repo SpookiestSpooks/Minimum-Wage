@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameProgress : MonoBehaviour
 {
     float maxDirt;
-    public GameObject[] remainingDirt;
+    public List<GameObject> remainingDirt = new List<GameObject>();
     public Transform[] respawnLocation;
     public GameObject Player1, Player2, Player3, Player4; //prefabs
     WindowManager windowManager;
@@ -38,6 +38,7 @@ public class GameProgress : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 5;
         privateLocation = nextLocation;
         GameObject newStage = Instantiate(stagePrefab, new Vector3(-5.9f, 11.01911f, -12.54786f), stagePrefab.transform.rotation);
         newStage.transform.SetParent(stageObject);
@@ -45,18 +46,12 @@ public class GameProgress : MonoBehaviour
         windowOpening = gameObject.GetComponent<WindowOpening>();
         mainCamera = GameObject.Find("Main Camera");
 
-        windowManager.Setup();
-        windowOpening.setupWindows();
-
-        remainingDirt = GameObject.FindGameObjectsWithTag("Wiper");
-        maxDirt = remainingDirt.Length;
+        setupStage();
+        maxDirt = remainingDirt.Count;
     }
 
     private void FixedUpdate()
     {
-
-        remainingDirt = GameObject.FindGameObjectsWithTag("Wiper");
-
         if (Input.GetButton("Cancel"))
         {
             Application.Quit();
@@ -81,7 +76,6 @@ public class GameProgress : MonoBehaviour
             
         }
 
-        setupCleanCount();
     }
 
     public void respawn(GameObject player, string playerTag)
@@ -123,14 +117,6 @@ public class GameProgress : MonoBehaviour
         timerText.text = niceTime;
     }
 
-    void setupCleanCount()
-    {
-        dirtCleaned = maxDirt - remainingDirt.Length;
-        windowManager = gameObject.GetComponent<WindowManager>();
-
-        percentText.text = Mathf.RoundToInt(100 * (dirtCleaned / maxDirt)) + "%";
-    }
-
     public void getPoints(int playerNumber)
     {
         if (playerNumber == 1) { p1Score += scorePerClean; }
@@ -146,16 +132,38 @@ public class GameProgress : MonoBehaviour
 
     IEnumerator nextStage()
     {
+        windowOpening.enableOpening = false;
         Vector3 newlocation = new Vector3(stageLocation.position.x, stageLocation.position.y + privateLocation, stageLocation.position.z);
         
         GameObject newStage = Instantiate(stagePrefab, newlocation, stagePrefab.transform.rotation);
         newStage.transform.SetParent(stageObject);
+        
         yield return new WaitForSeconds(4);
         privateLocation += nextLocation;
+        windowManager.windows.Clear();
+        windowOpening.windows.Clear();
+        Destroy(stageObject.GetChild(stageLevel - 1).GetChild(0).gameObject);
+        for (int i = 0; i < remainingDirt.Count; i++)
+        {
+            Destroy(remainingDirt[i]);
+        }
         stageLevel += 1;
-        timer = 3;
-        //Destroy(stageObject.GetChild(0).gameObject); // this is the broken part
+        timer = 45 - (5 * stageLevel - 1);
+        yield return new WaitForSeconds(1);
+        setupStage();
         stageTransition = false;
+    }
+
+    void setupStage()
+    {
+        windowManager.Setup();
+        windowOpening.setupWindows();
+        remainingDirt.Clear();
+        foreach (GameObject dirt in GameObject.FindGameObjectsWithTag("Wiper"))
+        {
+            remainingDirt.Add(dirt);
+        }
+        windowOpening.enableOpening = true;
     }
 
     void moveCamera()

@@ -1085,7 +1085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1876,7 +1876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2647,8 +2647,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9fef31679120864db49535364ea280f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windows: []
   timer: 5
   amountOfWindows: 4
+  enableOpening: 0
 --- !u!114 &769089799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2661,6 +2663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f123fa6b491954a419043879c4a7dd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windows: []
   windowCount: 0
   dirtyWindows: 25
   dirtGroup: {fileID: 6920909791472406820, guid: 1a684c536873fb747987c8aab25d8fc6, type: 3}
@@ -2686,7 +2689,7 @@ MonoBehaviour:
   Player2: {fileID: 1485217855732183982, guid: e4a0d7b03647b6346bb39e053ac0e72f, type: 3}
   Player3: {fileID: 1197603745554382714, guid: 5c4b2d9f5ba004d4498cd77cb7e4f65a, type: 3}
   Player4: {fileID: 2943204988838143356, guid: b114f036d35d01043a3fa04f0ea774c5, type: 3}
-  timer: 5
+  timer: 45
   dirtCleaned: 0
   timerText: {fileID: 878867847}
   percentText: {fileID: 1520648844}
