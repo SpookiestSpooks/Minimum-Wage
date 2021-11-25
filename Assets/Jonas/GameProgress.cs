@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameProgress : MonoBehaviour
 {
+    [SerializeField] int timeScale = 1;
+
     float maxDirt;
     public List<GameObject> remainingDirt = new List<GameObject>();
     public Transform[] respawnLocation;
     public GameObject Player1, Player2, Player3, Player4; //prefabs
     WindowManager windowManager;
     WindowOpening windowOpening;
+
+    public GameObject scream;
+    public GameObject crashes;
 
     [Header("Timer & Completion")]
     public float timer = 120;
@@ -36,15 +42,22 @@ public class GameProgress : MonoBehaviour
     private float privateLocation; // takes from nextlocation to make editing a bit easier
     public bool stageTransition = false;
 
+    [Header("Camera Shake")]
+    public bool shakeStart = false;
+    public AnimationCurve curve;
+    public float shakeDuration = 1f;
+    GameObject currentCamera;
+
     private void Start()
     {
-        Time.timeScale = 5;
+        Time.timeScale = timeScale;
         privateLocation = nextLocation;
         GameObject newStage = Instantiate(stagePrefab, new Vector3(-5.9f, 11.01911f, -12.54786f), stagePrefab.transform.rotation);
         newStage.transform.SetParent(stageObject);
         windowManager = gameObject.GetComponent<WindowManager>();
         windowOpening = gameObject.GetComponent<WindowOpening>();
         mainCamera = GameObject.Find("Main Camera");
+        currentCamera = mainCamera.transform.GetChild(0).gameObject;
 
         setupStage();
         maxDirt = remainingDirt.Count;
@@ -66,8 +79,16 @@ public class GameProgress : MonoBehaviour
             timerText.text = "00:00";
             if (!stageTransition)
             {
-                StartCoroutine(nextStage());
-                stageTransition = true;
+                if(stageLevel != 5)
+                {
+                    StartCoroutine(nextStage());
+                    stageTransition = true;
+                }
+                else
+                {
+                    PublicScores.player1Score = p1Score; PublicScores.player2Score = p2Score; PublicScores.player3Score = p3Score; PublicScores.player4Score = p4Score;
+                    SceneManager.LoadScene("EndScreen");
+                }
             }
             else
             {
@@ -76,17 +97,31 @@ public class GameProgress : MonoBehaviour
             
         }
 
+        percentText.text = stageLevel + "/5";
+
     }
 
-    public void respawn(GameObject player, string playerTag)
-    {    
-        Destroy(player);
-        StartCoroutine(waitRespawn(playerTag));
-    }
-
-    IEnumerator waitRespawn(string playerTag)
+    public void respawn(GameObject player, string playerTag, bool window)
     {
-        yield return new WaitForSeconds(2);
+        int timer = 2;
+        if (window)
+        {
+            timer = 4;
+            Instantiate(crashes);
+            StartCoroutine(cameraShake());
+        }
+        else
+        {
+            timer = 2;
+            Instantiate(scream);
+        }
+        Destroy(player);
+        StartCoroutine(waitRespawn(playerTag, timer));
+    }
+
+    IEnumerator waitRespawn(string playerTag, int time)
+    {
+        yield return new WaitForSeconds(time);
         int random = Random.Range(0,3);
         if (playerTag == "Player")
         {
@@ -139,6 +174,7 @@ public class GameProgress : MonoBehaviour
         newStage.transform.SetParent(stageObject);
         
         yield return new WaitForSeconds(4);
+        //currentCamera.transform.position = mainCamera.transform.position;
         privateLocation += nextLocation;
         windowManager.windows.Clear();
         windowOpening.windows.Clear();
@@ -148,7 +184,7 @@ public class GameProgress : MonoBehaviour
             Destroy(remainingDirt[i]);
         }
         stageLevel += 1;
-        timer = 45 - (5 * stageLevel - 1);
+        timer = 40 - (5 * stageLevel - 1);
         yield return new WaitForSeconds(1);
         setupStage();
         stageTransition = false;
@@ -172,4 +208,26 @@ public class GameProgress : MonoBehaviour
         Vector3 newCamera = new Vector3(cameraLocation.position.x, cameraLocation.position.y + privateLocation, cameraLocation.position.z);
         mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, newCamera, speed * Time.deltaTime);
     }
+
+    IEnumerator cameraShake() //https://www.youtube.com/watch?v=BQGTdRhGmE4
+    {
+        Vector3 startPosition = mainCamera.transform.position;
+
+        if (!stageTransition)
+        {
+            
+            float elapsedTime = 0f;
+
+            while (elapsedTime < shakeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float strength = curve.Evaluate(elapsedTime / shakeDuration);
+                currentCamera.transform.localPosition = Random.insideUnitSphere * strength;
+                yield return null;
+            }
+        }
+
+        currentCamera.transform.localPosition = Vector3.zero;
+    }
+
 }

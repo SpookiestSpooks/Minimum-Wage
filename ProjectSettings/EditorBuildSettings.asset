@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Final/FinalScene.unity
     guid: bb47bc078f56375409a3ad85010d4d88
+  - enabled: 1
+    path: Assets/Final/EndScreen.unity
+    guid: 5317ea970d0e6c9479beff872f6ceb17
   m_configObjects: {}

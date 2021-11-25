@@ -53,7 +53,7 @@ public class WindowScript : MonoBehaviour
 
             if (other != null)
             {
-                progress.respawn(other.gameObject.transform.parent.gameObject, other.gameObject.transform.parent.tag);
+                progress.respawn(other.gameObject.transform.parent.gameObject, other.gameObject.transform.parent.tag, true);
                 CloseWindow();
                 dead = true;
             }

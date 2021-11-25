@@ -5,7 +5,6 @@ using UnityEngine;
 public class Border : MonoBehaviour
 {
     public GameProgress progress;
-    public GameObject scream;
 
     private void OnTriggerExit(Collider other)
     {
@@ -15,8 +14,7 @@ public class Border : MonoBehaviour
             
             if (other != null)
             {
-                progress.respawn(other.gameObject.transform.parent.gameObject, other.gameObject.transform.parent.tag);
-                Instantiate(scream);
+                progress.respawn(other.gameObject.transform.parent.gameObject, other.gameObject.transform.parent.tag, false);
 
             }
             
